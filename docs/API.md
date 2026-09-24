@@ -73,18 +73,20 @@ Each car carries three URLs pointing at local SVGs in `public/images/`. They
 are labelled with their breakpoint and pixel dimensions, so you can confirm at
 a glance which one the browser picked.
 
-| Field | Intended viewport | Asset size |
-| --- | --- | --- |
-| `mobile` | ≤ 639px | 640×420 |
-| `tablet` | 640–1023px | 1024×576 |
-| `desktop` | ≥ 1024px | 1600×800 |
+| Field     | Intended viewport | Asset size |
+| --------- | ----------------- | ---------- |
+| `mobile`  | ≤ 639px           | 640×420    |
+| `tablet`  | 640–1023px        | 1024×576   |
+| `desktop` | ≥ 1024px          | 1600×800   |
 
 ## Testing against the API
 
-`src/test/example.integration.test.tsx` shows the pattern: start
-`src/mocks/server.ts`, render through `renderWithProviders`, and let the real
-Apollo client talk to the mock API. Call `db.reset()` between tests if a case
-creates records.
+`src/test/cars.integration.test.tsx` demonstrates integration testing against
+the mock GraphQL API. It starts `src/mocks/server.ts`, renders the application
+through `renderWithProviders`, and lets the real Apollo client communicate
+with the mock API.
+
+Call `db.reset()` between tests if a case creates records.
 
 To force an error path, override a handler for a single test:
 
@@ -94,7 +96,7 @@ import { server } from "@/mocks/server";
 
 server.use(
   graphql.query("GetCars", () =>
-    HttpResponse.json({ errors: [{ message: "boom" }] })
-  )
+    HttpResponse.json({ errors: [{ message: "boom" }] }),
+  ),
 );
 ```
