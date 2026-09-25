@@ -1,5 +1,11 @@
 import { useMemo, useState } from "react";
-import { Container, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import { useCars } from "../hooks/useCars";
 import { CarList } from "../components/CarList";
 import { CarFilters } from "../components/CarFilters";
@@ -9,6 +15,7 @@ export const CarsPage = () => {
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [sort, setSort] = useState("model-asc");
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const {
     cars,
@@ -46,16 +53,33 @@ export const CarsPage = () => {
       <Typography
         variant="h4"
         component="h1"
-        sx={{ mb: 4 }}
+        sx={{ mb: 2 }}
       >
         Cars
       </Typography>
 
-      <CreateCarForm
-        onSubmit={createCar}
-        loading={creating}
-        error={createError}
-      />
+      <Button
+        variant="contained"
+        onClick={() => setCreateDialogOpen(true)}
+        sx={{ mb: 4 }}
+      >
+        Create Car
+      </Button>
+
+      <Dialog
+        open={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Create Car</DialogTitle>
+
+        <CreateCarForm
+          onSubmit={createCar}
+          loading={creating}
+          error={createError}
+        />
+      </Dialog>
 
       <CarFilters
         model={model}

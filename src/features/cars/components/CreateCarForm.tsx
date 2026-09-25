@@ -2,10 +2,8 @@ import { useState } from "react";
 import {
   Alert,
   Button,
-  Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import type { CreateCarInput } from "../types/car";
 
@@ -186,129 +184,120 @@ export const CreateCarForm = ({
   };
 
   return (
-    <Paper sx={{ p: 3, mb: 4 }}>
-      <Typography
-        variant="h5"
-        component="h2"
-        sx={{ mb: 3 }}
-      >
-        Add car
-      </Typography>
+    <Stack
+      component="form"
+      spacing={2}
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{ p: 3 }}
+    >
+      {error && (
+        <Alert severity="error">
+          Unable to create car. Please try again.
+        </Alert>
+      )}
 
-      <Stack
-        component="form"
-        spacing={2}
-        onSubmit={handleSubmit}
-        noValidate
-      >
-        {error && (
-          <Alert severity="error">
-            Unable to create car. Please try again.
-          </Alert>
-        )}
-
-        <TextField
-          label="Make"
-          value={make}
-          onChange={(event) => {
-            if (event.target.value.length <= 50) {
-              setMake(event.target.value);
-            }
-          }}
-          error={Boolean(errors.make)}
-          helperText={errors.make}
-          required
-          fullWidth
-        />
-
-        <TextField
-          label="Model"
-          value={model}
-          onChange={(event) => {
-            if (event.target.value.length <= 50) {
-              setModel(event.target.value);
-            }
-          }}
-          error={Boolean(errors.model)}
-          helperText={errors.model}
-          required
-          fullWidth
-        />
-
-        <TextField
-          label="Year"
-          value={year}
-          onChange={(event) => {
-            const value = event.target.value;
-
-            if (/^\d{0,4}$/.test(value)) {
-              setYear(value);
-            }
-          }}
-          error={Boolean(errors.year)}
-          helperText={
-            errors.year ?? "Enter a 4-digit year"
+      <TextField
+        label="Make"
+        value={make}
+        onChange={(event) => {
+          if (event.target.value.length <= 50) {
+            setMake(event.target.value);
           }
-          placeholder="YYYY"
-          required
-          fullWidth
-          slotProps={{
-            htmlInput: {
-              inputMode: "numeric",
-              maxLength: 4,
-            },
-          }}
-        />
+        }}
+        error={Boolean(errors.make)}
+        helperText={errors.make}
+        required
+        fullWidth
+      />
 
-        <TextField
-          label="Color"
-          value={color}
-          onChange={(event) => {
-            if (event.target.value.length <= 30) {
-              setColor(event.target.value);
-            }
-          }}
-          error={Boolean(errors.color)}
-          helperText={errors.color}
-          required
-          fullWidth
-        />
+      <TextField
+        label="Model"
+        value={model}
+        onChange={(event) => {
+          if (event.target.value.length <= 50) {
+            setModel(event.target.value);
+          }
+        }}
+        error={Boolean(errors.model)}
+        helperText={errors.model}
+        required
+        fullWidth
+      />
 
-        <TextField
-          label="Mobile image URL"
-          value={mobile}
-          onChange={(event) => setMobile(event.target.value)}
-          error={Boolean(errors.mobile)}
-          helperText={errors.mobile}
-          fullWidth
-        />
+      <TextField
+        label="Year"
+        value={year}
+        onChange={(event) => {
+          const value = event.target.value;
 
-        <TextField
-          label="Tablet image URL"
-          value={tablet}
-          onChange={(event) => setTablet(event.target.value)}
-          error={Boolean(errors.tablet)}
-          helperText={errors.tablet}
-          fullWidth
-        />
+          if (/^\d{0,4}$/.test(value)) {
+            setYear(value);
+          }
+        }}
+        error={Boolean(errors.year)}
+        helperText={
+          errors.year ?? "Enter a 4-digit year"
+        }
+        placeholder="YYYY"
+        required
+        fullWidth
+        slotProps={{
+          htmlInput: {
+            inputMode: "numeric",
+            maxLength: 4,
+          },
+        }}
+      />
 
-        <TextField
-          label="Desktop image URL"
-          value={desktop}
-          onChange={(event) => setDesktop(event.target.value)}
-          error={Boolean(errors.desktop)}
-          helperText={errors.desktop}
-          fullWidth
-        />
+      <TextField
+        label="Color"
+        value={color}
+        onChange={(event) => {
+          if (event.target.value.length <= 30) {
+            setColor(event.target.value);
+          }
+        }}
+        error={Boolean(errors.color)}
+        helperText={errors.color}
+        required
+        fullWidth
+      />
 
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={loading}
-        >
-          {loading ? "Creating..." : "Add car"}
-        </Button>
-      </Stack>
-    </Paper>
+      <TextField
+        label="Mobile image URL"
+        value={mobile}
+        onChange={(event) => setMobile(event.target.value)}
+        error={Boolean(errors.mobile)}
+        helperText={errors.mobile}
+        fullWidth
+      />
+
+      <TextField
+        label="Tablet image URL"
+        value={tablet}
+        onChange={(event) => setTablet(event.target.value)}
+        error={Boolean(errors.tablet)}
+        helperText={errors.tablet}
+        fullWidth
+      />
+
+      <TextField
+        label="Desktop image URL"
+        value={desktop}
+        onChange={(event) => setDesktop(event.target.value)}
+        error={Boolean(errors.desktop)}
+        helperText={errors.desktop}
+        fullWidth
+      />
+
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={loading}
+      >
+        {loading ? "Creating..." : "Add car"}
+      </Button>
+    </Stack>
   );
 };
